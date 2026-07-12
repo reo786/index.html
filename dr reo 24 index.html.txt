@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIA Triad Animated Login</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#000428);
+background-size:400% 400%;
+animation:bgMove 10s ease infinite;
+overflow:hidden;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* Floating circles */
+
+.circle{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,.08);
+animation:float 10s linear infinite;
+}
+
+.circle:nth-child(1){
+width:150px;
+height:150px;
+left:10%;
+top:10%;
+}
+
+.circle:nth-child(2){
+width:250px;
+height:250px;
+right:10%;
+bottom:10%;
+animation-duration:15s;
+}
+
+.circle:nth-child(3){
+width:80px;
+height:80px;
+left:70%;
+top:20%;
+animation-duration:8s;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0px);
+}
+50%{
+transform:translateY(-40px);
+}
+100%{
+transform:translateY(0px);
+}
+}
+
+.container{
+width:900px;
+display:flex;
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(12px);
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 0 25px cyan;
+animation:fade 1.5s;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:scale(.8);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+.left{
+width:50%;
+padding:40px;
+color:white;
+}
+
+.left h1{
+text-align:center;
+margin-bottom:20px;
+color:#00ffff;
+}
+
+.card{
+background:rgba(255,255,255,.15);
+padding:18px;
+margin:15px 0;
+border-left:5px solid cyan;
+border-radius:10px;
+transition:.4s;
+}
+
+.card:hover{
+transform:translateX(10px);
+background:rgba(0,255,255,.25);
+}
+
+.card h3{
+margin-bottom:8px;
+}
+
+.right{
+width:50%;
+background:white;
+padding:40px;
+}
+
+.right h2{
+text-align:center;
+margin-bottom:25px;
+color:#203a43;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+outline:none;
+border-radius:8px;
+background:#eee;
+font-size:16px;
+}
+
+input:focus{
+box-shadow:0 0 10px cyan;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#0077ff;
+color:white;
+font-size:18px;
+cursor:pointer;
+transition:.4s;
+}
+
+button:hover{
+background:#00b4ff;
+transform:scale(1.05);
+box-shadow:0 0 20px cyan;
+}
+
+#msg{
+margin-top:20px;
+font-weight:bold;
+text-align:center;
+}
+
+.success{
+color:green;
+animation:pop .5s;
+}
+
+.error{
+color:red;
+animation:shake .4s;
+}
+
+@keyframes shake{
+0%{transform:translateX(0);}
+25%{transform:translateX(-8px);}
+50%{transform:translateX(8px);}
+75%{transform:translateX(-8px);}
+100%{transform:translateX(0);}
+}
+
+@keyframes pop{
+0%{transform:scale(.5);}
+100%{transform:scale(1);}
+}
+
+@media(max-width:800px){
+
+.container{
+flex-direction:column;
+width:95%;
+}
+
+.left,.right{
+width:100%;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+
+<div class="container">
+
+<div class="left">
+
+<h1>🔐 CIA TRIAD</h1>
+
+<div class="card">
+<h3>Confidentiality</h3>
+<p>Protect information from unauthorized access using passwords, encryption, and authentication.</p>
+</div>
+
+<div class="card">
+<h3>Integrity</h3>
+<p>Maintain the accuracy and trustworthiness of data by preventing unauthorized modification.</p>
+</div>
+
+<div class="card">
+<h3>Availability</h3>
+<p>Ensure systems and information are accessible whenever authorized users need them.</p>
+</div>
+
+</div>
+
+<div class="right">
+
+<h2>Secure Login</h2>
+
+<form id="login">
+
+<input type="text" id="user" placeholder="Username">
+
+<input type="password" id="pass" placeholder="Password">
+
+<button>Login</button>
+
+<div id="msg"></div>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+document.getElementById("login").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let u=document.getElementById("user").value;
+let p=document.getElementById("pass").value;
+let msg=document.getElementById("msg");
+
+if(u=="reo" && p=="112496"){
+
+msg.className="success";
+msg.innerHTML="✔ Login Successful";
+
+setTimeout(function(){
+
+document.querySelector(".right").innerHTML=
+`
+<h1 style="color:green;text-align:center;">Welcome Admin</h1>
+
+<h3 style="text-align:center;margin-top:20px;">
+CIA Triad Security Dashboard
+</h3>
+
+<p style="margin-top:30px;text-align:center;">
+Confidentiality ✔<br><br>
+Integrity ✔<br><br>
+Availability ✔
+</p>
+`;
+
+},1200);
+
+}
+else{
+
+msg.className="error";
+msg.innerHTML="❌ Invalid Username or Password";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
